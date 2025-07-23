@@ -1,5 +1,12 @@
 import express from 'express';
 import {
+  getStudentFeeStatus,
+  getFeeSummary,
+  filterFeesByMonth,
+  markFeeAsPaid,
+  assignFeeToStudent,
+  getFilteredFees,
+  getUnpaidFees,
   getFeeHistoryByStudent,
   getMonthlyFeeBreakdown,
   payFee,
@@ -42,5 +49,22 @@ router.get('/history/:id', protect, getFeeHistoryByStudent);
 
 // Admin view
 router.get('/all', protect, authorizeRoles('admin'), getAllFees);
+
+// Admin or Accountant can view unpaid fees
+router.get('/unpaid', protect, authorizeRoles('admin', 'accountant'), getUnpaidFees);
+
+// Filtered fee list
+router.get('/filter', protect, authorizeRoles('admin', 'accountant'), getFilteredFees);
+
+// Admin-only: assign new fee to a student
+router.post('/assign', protect, authorizeRoles('admin'), assignFeeToStudent);
+router.put('/:id/pay', protect, authorizeRoles('admin', 'accountant'), markFeeAsPaid);
+
+// 📅 Filter fees by month/year/student
+router.get('/filter', protect, authorizeRoles('admin', 'accountant', 'student', 'parent'), filterFeesByMonth);
+router.get('/summary', protect, authorizeRoles('admin', 'accountant', 'student', 'parent'), getFeeSummary);
+router.get('/student-status', protect, authorizeRoles('student', 'parent'),
+  getStudentFeeStatus);
+
 
 export default router;

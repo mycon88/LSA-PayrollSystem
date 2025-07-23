@@ -30,7 +30,7 @@ const feeSchema = new mongoose.Schema(
       type: String,
     },
 
-    // 🆕 Add these for monthly/term breakdowns
+    // 🆕 Monthly/Term Breakdown
     month: {
       type: String, // e.g., 'January', 'February'
     },
@@ -39,6 +39,21 @@ const feeSchema = new mongoose.Schema(
     },
     term: {
       type: String, // e.g., '1st Semester', '2nd Term'
+    },
+    semester: { 
+      type: String // e.g. "1st Sem", "2nd Sem"
+    },
+
+    // 🆕 Payment Method & Receipt Tracking
+    paymentMethod: {
+      type: String,
+      enum: ['cash', 'gcash', 'bank', 'online', 'check'],
+    },
+    receiptNumber: {
+      type: String,
+    },
+    transactionId: {
+      type: String,
     },
   },
   {
