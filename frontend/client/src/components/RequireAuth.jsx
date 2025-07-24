@@ -1,3 +1,4 @@
+// src/components/RequireAuth.jsx
 import { Navigate, Outlet } from 'react-router-dom';
 
 const RequireAuth = ({ allowedRoles }) => {
@@ -5,15 +6,17 @@ const RequireAuth = ({ allowedRoles }) => {
 
   try {
     user = JSON.parse(localStorage.getItem('user'));
-  } catch (err) {
-    console.error('Error parsing user from localStorage:', err);
+  } catch (error) {
+    console.error('Failed to parse user from localStorage:', error);
   }
 
-  if (!user || !user.role) {
+  if (!user) {
+    // Not logged in
     return <Navigate to="/" replace />;
   }
 
   if (!allowedRoles.includes(user.role)) {
+    // Logged in but not authorized
     return <Navigate to="/" replace />;
   }
 

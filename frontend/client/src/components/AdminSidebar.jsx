@@ -1,5 +1,5 @@
 // src/components/AdminSidebar.jsx
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LayoutDashboard, Users, DollarSign, LogOut } from 'lucide-react';
 
 const links = [
@@ -9,9 +9,11 @@ const links = [
 ];
 
 export default function AdminSidebar() {
+  const navigate = useNavigate(); // ✅ Better than full page reload
+
   const handleLogout = () => {
     localStorage.removeItem('user');
-    window.location.href = '/';
+    navigate('/'); // ⬅️ Smooth client-side redirect
   };
 
   return (

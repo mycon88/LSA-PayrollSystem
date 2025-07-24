@@ -2,13 +2,16 @@
 import { Outlet } from 'react-router-dom';
 import StudentSidebar from '../components/StudentSidebar';
 
-export default function StudentLayout() {
+const StudentLayout = () => {
   return (
-    <div className="flex">
+    <div className="flex min-h-screen bg-gray-50">
       <StudentSidebar />
-      <main className="ml-64 p-6 w-full min-h-screen bg-gray-50">
+      
+      <main className="flex-1 p-6 ml-64">
         <Outlet />
       </main>
     </div>
   );
-}
+};
+
+export default StudentLayout;
