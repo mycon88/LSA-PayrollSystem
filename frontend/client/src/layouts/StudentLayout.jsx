@@ -1,14 +1,14 @@
-import Sidebar from '../components/Sidebar';
+// src/layouts/StudentLayout.jsx
+import { Outlet } from 'react-router-dom';
+import StudentSidebar from '../components/StudentSidebar';
 
-const StudentLayout = ({ children }) => {
+export default function StudentLayout() {
   return (
     <div className="flex">
-      <Sidebar />
-      <main className="flex-1 p-4 bg-gray-100 min-h-screen">
-        {children}
+      <StudentSidebar />
+      <main className="ml-64 p-6 w-full min-h-screen bg-gray-50">
+        <Outlet />
       </main>
     </div>
   );
-};
-
-export default StudentLayout;
+}
