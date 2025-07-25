@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../../services/authService';
 
+
 const LoginForm = () => {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ name: '', password: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
@@ -16,8 +17,9 @@ const LoginForm = () => {
     e.preventDefault();
     try {
       const res = await login(formData);
-      localStorage.setItem('token', res.token); // Store token
-      navigate('/dashboard'); // Redirect after login
+      localStorage.setItem('token', res.token);
+      localStorage.setItem('user', JSON.stringify(res));
+      navigate('/admin/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }
@@ -27,10 +29,10 @@ const LoginForm = () => {
     <form onSubmit={handleSubmit} className="space-y-4">
       {error && <p className="text-red-500">{error}</p>}
       <input
-        type="email"
-        name="email"
-        placeholder="Email"
-        value={formData.email}
+        type="text"
+        name="name"
+        placeholder="Admin Name"
+        value={formData.name}
         onChange={handleChange}
         className="w-full p-2 border rounded"
         required
@@ -44,7 +46,7 @@ const LoginForm = () => {
         className="w-full p-2 border rounded"
         required
       />
-      <button type="submit" className="w-full bg-blue-500 text-white p-2 rounded">
+      <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
         Login
       </button>
     </form>
